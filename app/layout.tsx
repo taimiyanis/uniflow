@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${nunito.variable} ${syne.variable}`}>
-      <body style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+      <body className={`${nunito.variable} ${syne.variable} flex h-screen overflow-hidden`}>
         <Sidebar />
-        <main style={{ flex: 1, overflowY: 'auto', padding: '32px 36px', background: 'var(--uniflow-bg)' }}>
+        <main className="flex-1 overflow-y-auto px-9 py-8" style={{ background: 'var(--uniflow-bg)' }}>
           {children}
         </main>
       </body>

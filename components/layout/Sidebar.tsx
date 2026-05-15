@@ -3,14 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navItems = [
+type NavItem = { label: string; href: string; icon: string; pro?: boolean };
+
+const navItems: NavItem[] = [
   { label: 'Dashboard', href: '/', icon: '▣' },
   { label: 'My Courses', href: '/course/ec22', icon: '◈' },
   { label: 'Planner', href: '/planner', icon: '◷' },
-  { label: 'AI Tutor', href: '#', icon: '◎', pro: false },
+  { label: 'AI Tutor', href: '#', icon: '◎' },
   { label: 'Grades', href: '#', icon: '◆', pro: true },
   { label: 'UNIFLOW+', href: '#', icon: '★', pro: true },
 ];
+
+const DEMO_USER = { name: 'Yanis Taimi', initials: 'YT', subtitle: 'B2 · ESCP BIM' };
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -23,7 +27,7 @@ export default function Sidebar() {
         background: 'var(--uniflow-sidebar)',
         display: 'flex',
         flexDirection: 'column',
-        height: '100vh',
+        height: '100%',
         padding: '24px 0',
         flexShrink: 0,
       }}
@@ -61,7 +65,7 @@ export default function Sidebar() {
             UNIFLOW
           </span>
         </div>
-        <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.42)', marginTop: 10, fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase' }}>
+        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.42)', marginTop: 10, fontWeight: 700, letterSpacing: '1.2px', textTransform: 'uppercase' }}>
           Student Portal
         </div>
       </div>
@@ -72,7 +76,7 @@ export default function Sidebar() {
           style={{
             width: 32,
             height: 32,
-            borderRadius: 20,
+            borderRadius: '50%',
             background: 'var(--uniflow-blue)',
             display: 'flex',
             alignItems: 'center',
@@ -83,11 +87,11 @@ export default function Sidebar() {
             flexShrink: 0,
           }}
         >
-          YT
+          {DEMO_USER.initials}
         </div>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>Yanis Taimi</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>B2 · ESCP BIM</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{DEMO_USER.name}</div>
+          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>{DEMO_USER.subtitle}</div>
         </div>
       </div>
 
@@ -95,25 +99,24 @@ export default function Sidebar() {
       <nav style={{ flex: 1, padding: '0 12px' }}>
         {navItems.map((item) => {
           const isActive = item.href !== '#' && pathname === item.href;
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 10,
-                padding: '9px 12px',
-                borderRadius: 8,
-                marginBottom: 2,
-                textDecoration: 'none',
-                background: isActive ? 'rgba(47,111,237,0.18)' : 'transparent',
-                color: isActive ? '#fff' : 'rgba(255,255,255,0.55)',
-                fontSize: 13,
-                fontWeight: isActive ? 700 : 500,
-                transition: 'background 0.15s, color 0.15s',
-              }}
-            >
+          const commonStyle = {
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            padding: '9px 12px',
+            borderRadius: 8,
+            marginBottom: 2,
+            textDecoration: 'none',
+            background: isActive ? 'rgba(47,111,237,0.18)' : 'transparent',
+            color: isActive ? '#fff' : 'rgba(255,255,255,0.55)',
+            fontSize: 13,
+            fontWeight: isActive ? 700 : 500,
+            transition: 'background 0.15s, color 0.15s',
+            cursor: 'pointer',
+          } as React.CSSProperties;
+
+          const inner = (
+            <>
               <span style={{ fontSize: 15, opacity: isActive ? 1 : 0.7 }}>{item.icon}</span>
               {item.label}
               {item.pro && (
@@ -132,6 +135,20 @@ export default function Sidebar() {
                   PRO
                 </span>
               )}
+            </>
+          );
+
+          if (item.href === '#') {
+            return (
+              <span key={item.label} role="button" tabIndex={0} style={commonStyle}>
+                {inner}
+              </span>
+            );
+          }
+
+          return (
+            <Link key={item.label} href={item.href} style={commonStyle}>
+              {inner}
             </Link>
           );
         })}
