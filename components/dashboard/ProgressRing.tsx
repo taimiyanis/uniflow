@@ -17,26 +17,23 @@ export default function ProgressRing() {
     const targetOffset = CIRCUMFERENCE - (targetPct / 100) * CIRCUMFERENCE;
     stroke.style.strokeDashoffset = String(CIRCUMFERENCE);
 
-    const ringDuration = 1400;
-    const counterDuration = 1200;
+    const duration = 1400;
     let startTime: number | null = null;
+    let rafId: number;
 
     function step(ts: number) {
       if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / Math.max(ringDuration, counterDuration), 1);
+      const progress = Math.min((ts - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
 
-      const ringProgress = Math.min((ts - startTime) / ringDuration, 1);
-      const ringEased = 1 - Math.pow(1 - ringProgress, 3);
-      stroke!.style.strokeDashoffset = String(CIRCUMFERENCE - (CIRCUMFERENCE - targetOffset) * ringEased);
-
+      stroke!.style.strokeDashoffset = String(CIRCUMFERENCE - (CIRCUMFERENCE - targetOffset) * eased);
       pct!.textContent = Math.round(eased * targetPct) + '%';
 
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) rafId = requestAnimationFrame(step);
     }
 
-    const timer = setTimeout(() => requestAnimationFrame(step), 200);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => { rafId = requestAnimationFrame(step); }, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(rafId); };
   }, []);
 
   return (

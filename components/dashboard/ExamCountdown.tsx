@@ -12,16 +12,18 @@ export default function ExamCountdown() {
     const duration = 800;
     let startTime: number | null = null;
 
+    let rafId: number;
+
     function step(ts: number) {
       if (!startTime) startTime = ts;
       const progress = Math.min((ts - startTime) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       el!.textContent = String(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) rafId = requestAnimationFrame(step);
     }
 
-    const timer = setTimeout(() => requestAnimationFrame(step), 200);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => { rafId = requestAnimationFrame(step); }, 200);
+    return () => { clearTimeout(timer); cancelAnimationFrame(rafId); };
   }, []);
 
   return (

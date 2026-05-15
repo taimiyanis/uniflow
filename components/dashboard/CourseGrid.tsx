@@ -45,7 +45,10 @@ export default function CourseGrid() {
             ) : (
               <div
                 key={course.code}
+                role="button"
+                tabIndex={0}
                 onClick={() => setComingSoon({ code: course.code, name: course.name })}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setComingSoon({ code: course.code, name: course.name }); }}
                 style={{
                   background: 'var(--uniflow-card)',
                   border: '1px solid var(--uniflow-border)',
