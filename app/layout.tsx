@@ -20,8 +20,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${nunito.variable} ${syne.variable}`}>
+    <html lang="en" className={`${nunito.variable} ${syne.variable}`}>
+      <body>
         {children}
       </body>
     </html>

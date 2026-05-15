@@ -152,8 +152,3 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: var(--font-nunito), sans-serif;
-  background: var(--uniflow-bg);
-  color: var(--uniflow-text-1);
-}
