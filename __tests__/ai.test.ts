@@ -16,6 +16,11 @@ describe('getAIResponse', () => {
     expect(result).toContain('valid contract requires');
   });
 
+  it('does not trigger exam response for generic "past" input', () => {
+    const result = getAIResponse('my past performance was good', 0);
+    expect(result).not.toContain('January 2025 final');
+  });
+
   it('returns cycling default replies for unknown input', () => {
     const first = getAIResponse('something random', 0);
     const second = getAIResponse('something random', 1);

@@ -9,7 +9,7 @@ export function getAIResponse(text: string, defaultIndex: number): string {
   if (lower.includes('fiscal') || lower.includes('multiplier') || lower.includes('government spending')) return aiResponses.fiscal;
   if (lower.includes('monetary') || lower.includes('money supply') || lower.includes('liquidity')) return aiResponses.monetary;
   if (lower.includes('quiz') || lower.includes('question') || lower.includes('practice')) return aiResponses.quiz;
-  if (lower.includes('exam') || lower.includes('past') || lower.includes('january')) return aiResponses.exam;
+  if (lower.includes('exam') || lower.includes('past exam') || lower.includes('past paper') || lower.includes('january')) return aiResponses.exam;
   if (lower.includes('contract') || lower.includes('offer') || lower.includes('acceptance') || lower.includes('consideration')) return aiResponses.contract;
   if (lower.includes('breach') || lower.includes('damages') || lower.includes('remedy') || lower.includes('remedies')) return aiResponses.breach;
   if (lower.includes('liability') || lower.includes('tort') || lower.includes('delict') || lower.includes('strict liability')) return aiResponses.liability;
