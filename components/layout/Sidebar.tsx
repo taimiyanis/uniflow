@@ -140,9 +140,9 @@ export default function Sidebar() {
 
           if (item.href === '#') {
             return (
-              <span key={item.label} role="button" tabIndex={0} style={commonStyle}>
+              <button key={item.label} type="button" style={{ ...commonStyle, border: 'none', width: '100%', textAlign: 'left' }}>
                 {inner}
-              </span>
+              </button>
             );
           }
 
