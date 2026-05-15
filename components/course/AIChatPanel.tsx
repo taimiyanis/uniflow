@@ -22,10 +22,15 @@ export default function AIChatPanel() {
   const [chipsVisible, setChipsVisible] = useState(true);
   const [defaultIndex, setDefaultIndex] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, typing]);
+
+  useEffect(() => {
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, []);
 
   function sendMessage(text: string) {
     if (!text.trim()) return;
@@ -37,7 +42,7 @@ export default function AIChatPanel() {
     const reply = getAIResponse(text, defaultIndex);
     setDefaultIndex((i) => i + 1);
 
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       setTyping(false);
       setMessages((prev) => [...prev, { role: 'ai', text: reply }]);
     }, 1000 + Math.random() * 700);

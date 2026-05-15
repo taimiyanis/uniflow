@@ -61,7 +61,7 @@ export default function VideosTab() {
         </div>
       </div>
 
-      <Dialog open={showUpgrade} onOpenChange={setShowUpgrade}>
+      <Dialog open={showUpgrade} onOpenChange={(open) => setShowUpgrade(open)}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Upgrade to UNIFLOW+</DialogTitle>
