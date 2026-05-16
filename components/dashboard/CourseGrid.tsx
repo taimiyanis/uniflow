@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
+import { StatusPill } from '@/components/ui/StatusPill';
 
 export default function CourseGrid() {
   const [comingSoon, setComingSoon] = useState<{ code: string; name: string } | null>(null);
@@ -17,13 +18,29 @@ export default function CourseGrid() {
   return (
     <>
       <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--uniflow-text-1)', marginBottom: 16 }}>Your Courses</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 14 }}>
+        <div
+          style={{
+            fontSize: 16,
+            fontWeight: 700,
+            color: 'var(--uniflow-text-1)',
+            marginBottom: 16,
+          }}
+        >
+          Your Courses
+        </div>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+            gap: 14,
+          }}
+        >
           {courses.map((course) =>
             course.available ? (
               <Link
                 key={course.code}
                 href={`/course/${course.code.toLowerCase()}`}
+                className="uniflow-interactive-card"
                 style={{
                   background: 'var(--uniflow-card)',
                   border: '1px solid var(--uniflow-border)',
@@ -36,11 +53,30 @@ export default function CourseGrid() {
                   cursor: 'pointer',
                 }}
               >
-                <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--uniflow-blue)', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 6 }}>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-mono), ui-monospace, monospace',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--uniflow-blue)',
+                    letterSpacing: '0.5px',
+                    marginBottom: 8,
+                  }}
+                >
                   {course.code}
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--uniflow-text-1)', lineHeight: 1.35 }}>{course.name}</div>
-                <div style={{ marginTop: 10, fontSize: 11, fontWeight: 600, color: 'var(--uniflow-green)' }}>Active</div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: 'var(--uniflow-text-1)',
+                    lineHeight: 1.35,
+                    marginBottom: 12,
+                  }}
+                >
+                  {course.name}
+                </div>
+                <StatusPill tone="success" label="Active" size="xs" uppercase />
               </Link>
             ) : (
               <div
@@ -48,7 +84,11 @@ export default function CourseGrid() {
                 role="button"
                 tabIndex={0}
                 onClick={() => setComingSoon({ code: course.code, name: course.name })}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setComingSoon({ code: course.code, name: course.name }); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ')
+                    setComingSoon({ code: course.code, name: course.name });
+                }}
+                className="uniflow-interactive-card"
                 style={{
                   background: 'var(--uniflow-card)',
                   border: '1px solid var(--uniflow-border)',
@@ -60,11 +100,30 @@ export default function CourseGrid() {
                   opacity: 0.7,
                 }}
               >
-                <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--uniflow-text-3)', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 6 }}>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-mono), ui-monospace, monospace',
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: 'var(--uniflow-text-3)',
+                    letterSpacing: '0.5px',
+                    marginBottom: 8,
+                  }}
+                >
                   {course.code}
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--uniflow-text-2)', lineHeight: 1.35 }}>{course.name}</div>
-                <div style={{ marginTop: 10, fontSize: 11, fontWeight: 600, color: 'var(--uniflow-text-3)' }}>Coming soon</div>
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: 'var(--uniflow-text-2)',
+                    lineHeight: 1.35,
+                    marginBottom: 12,
+                  }}
+                >
+                  {course.name}
+                </div>
+                <StatusPill tone="neutral" label="Coming soon" size="xs" uppercase />
               </div>
             )
           )}
@@ -74,7 +133,9 @@ export default function CourseGrid() {
       <Dialog open={!!comingSoon} onOpenChange={() => setComingSoon(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{comingSoon?.code} — {comingSoon?.name}</DialogTitle>
+            <DialogTitle>
+              {comingSoon?.code} — {comingSoon?.name}
+            </DialogTitle>
             <DialogDescription>
               This course is not yet available on UNIFLOW. We are adding content for all 5 B2 Fall courses. Check back soon.
             </DialogDescription>

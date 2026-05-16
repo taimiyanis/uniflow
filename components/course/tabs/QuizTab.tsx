@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { Lightbulb, Check, X as XIcon } from 'lucide-react';
 import { ec22Quiz } from '@/lib/data/quiz';
+import { NumericDisplay } from '@/components/ui/NumericDisplay';
+import { StatusPill } from '@/components/ui/StatusPill';
 
 type AnswerState = 'unanswered' | 'correct' | 'wrong';
 
@@ -43,17 +46,65 @@ export default function QuizTab() {
   }
 
   if (finished) {
+    const passed = score >= 8;
     return (
-      <div style={{ background: 'var(--uniflow-card)', border: '1px solid var(--uniflow-border)', borderRadius: 14, padding: '40px', textAlign: 'center', boxShadow: 'var(--uniflow-shadow)' }}>
-        <div style={{ fontSize: 32, fontWeight: 900, color: 'var(--uniflow-blue)', marginBottom: 8 }}>{score}/{ec22Quiz.length}</div>
-        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--uniflow-text-1)', marginBottom: 4 }}>Quiz complete</div>
-        <div style={{ fontSize: 13, color: 'var(--uniflow-text-2)', marginBottom: 24 }}>
-          {score >= 8 ? 'Excellent. You have a solid grasp of these concepts.' : score >= 6 ? 'Good effort. Review the questions you missed.' : 'Keep practising. Go through the Notes tab and try again.'}
+      <div
+        style={{
+          background: 'var(--uniflow-card)',
+          border: '1px solid var(--uniflow-border)',
+          borderRadius: 14,
+          padding: '40px',
+          textAlign: 'center',
+          boxShadow: 'var(--uniflow-shadow)',
+        }}
+      >
+        <div style={{ marginBottom: 16 }}>
+          <StatusPill
+            tone={passed ? 'success' : score >= 6 ? 'warn' : 'danger'}
+            label={passed ? 'Mastered' : score >= 6 ? 'Familiar' : 'Needs review'}
+            size="sm"
+            uppercase
+          />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            justifyContent: 'center',
+            gap: 4,
+            marginBottom: 12,
+          }}
+        >
+          <NumericDisplay size={56} weight={800} color="var(--uniflow-9)" letterSpacing="-2px">
+            {score}
+          </NumericDisplay>
+          <NumericDisplay size={28} weight={600} color="var(--uniflow-text-3)">
+            /{ec22Quiz.length}
+          </NumericDisplay>
+        </div>
+        <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--uniflow-text-1)', marginBottom: 4 }}>
+          Quiz complete
+        </div>
+        <div style={{ fontSize: 13, color: 'var(--uniflow-text-2)', marginBottom: 24, maxWidth: 360, margin: '0 auto 24px' }}>
+          {passed
+            ? 'Excellent. You have a solid grasp of these concepts.'
+            : score >= 6
+              ? 'Good effort. Review the questions you missed.'
+              : 'Keep practising. Go through the Notes tab and try again.'}
         </div>
         <button
           type="button"
           onClick={handleRestart}
-          style={{ background: 'var(--uniflow-blue)', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 24px', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}
+          style={{
+            background: 'var(--uniflow-blue)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 8,
+            padding: '10px 24px',
+            fontSize: 13,
+            fontWeight: 700,
+            cursor: 'pointer',
+          }}
         >
           Restart quiz
         </button>
@@ -62,17 +113,82 @@ export default function QuizTab() {
   }
 
   return (
-    <div style={{ background: 'var(--uniflow-card)', border: '1px solid var(--uniflow-border)', borderRadius: 14, padding: '28px 32px', boxShadow: 'var(--uniflow-shadow)' }}>
+    <div
+      style={{
+        background: 'var(--uniflow-card)',
+        border: '1px solid var(--uniflow-border)',
+        borderRadius: 14,
+        padding: '28px 32px',
+        boxShadow: 'var(--uniflow-shadow)',
+      }}
+    >
       {/* Progress bar */}
-      <div style={{ height: 4, background: 'var(--uniflow-blue-light)', borderRadius: 2, marginBottom: 20, overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${progress}%`, background: 'var(--uniflow-blue)', borderRadius: 2, transition: 'width 0.3s' }} />
+      <div
+        style={{
+          height: 8,
+          background: 'var(--uniflow-blue-light)',
+          borderRadius: 4,
+          marginBottom: 20,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            height: '100%',
+            width: `${progress}%`,
+            background: 'var(--uniflow-blue)',
+            borderRadius: 4,
+            transition: 'width var(--duration-slow) var(--ease-out)',
+          }}
+        />
       </div>
 
-      <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--uniflow-text-3)', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 8 }}>
-        Question {questionIndex + 1} of {ec22Quiz.length}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 8,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            color: 'var(--uniflow-text-3)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.8px',
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 4,
+          }}
+        >
+          Question{' '}
+          <NumericDisplay size={11} weight={700} color="var(--uniflow-text-2)">
+            {questionIndex + 1}
+          </NumericDisplay>
+          {' '}of{' '}
+          <NumericDisplay size={11} weight={700} color="var(--uniflow-text-2)">
+            {ec22Quiz.length}
+          </NumericDisplay>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--uniflow-text-3)' }}>
+          Score:{' '}
+          <NumericDisplay size={11} weight={700} color="var(--uniflow-text-1)">
+            {score}
+          </NumericDisplay>
+        </div>
       </div>
 
-      <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--uniflow-text-1)', lineHeight: 1.45, marginBottom: 20 }}>
+      <div
+        style={{
+          fontSize: 16,
+          fontWeight: 700,
+          color: 'var(--uniflow-text-1)',
+          lineHeight: 1.45,
+          marginBottom: 20,
+        }}
+      >
         {question.question}
       </div>
 
@@ -88,16 +204,16 @@ export default function QuizTab() {
 
           if (isAnswered) {
             if (isCorrectOpt) {
-              borderColor = 'var(--uniflow-green)';
-              bg = 'var(--uniflow-green-light)';
+              borderColor = 'var(--success)';
+              bg = 'var(--success-bg)';
               color = '#15803D';
-              letterBg = 'var(--uniflow-green)';
+              letterBg = 'var(--success)';
               letterColor = '#fff';
             } else if (isSelectedOpt) {
-              borderColor = 'var(--uniflow-red)';
-              bg = '#FEF2F2';
+              borderColor = 'var(--danger)';
+              bg = 'var(--danger-bg)';
               color = '#991B1B';
-              letterBg = 'var(--uniflow-red)';
+              letterBg = 'var(--danger)';
               letterColor = '#fff';
             }
           }
@@ -121,7 +237,7 @@ export default function QuizTab() {
                 fontWeight: 600,
                 textAlign: 'left',
                 cursor: isAnswered ? 'default' : 'pointer',
-                transition: 'border-color 0.15s, background 0.15s',
+                transition: 'border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)',
                 width: '100%',
               }}
             >
@@ -138,6 +254,7 @@ export default function QuizTab() {
                   fontSize: 11,
                   fontWeight: 800,
                   flexShrink: 0,
+                  fontFamily: 'var(--font-mono), monospace',
                 }}
               >
                 {String.fromCharCode(65 + i)}
@@ -151,18 +268,29 @@ export default function QuizTab() {
       {isAnswered && (
         <div
           style={{
-            padding: '12px 16px',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 10,
+            padding: '14px 16px',
             borderRadius: 8,
             fontSize: 13,
-            fontWeight: 600,
+            fontWeight: 500,
             lineHeight: 1.6,
             marginBottom: 16,
-            background: answerState === 'correct' ? 'var(--uniflow-green-light)' : '#FEF2F2',
+            background: answerState === 'correct' ? 'var(--success-bg)' : 'var(--danger-bg)',
             color: answerState === 'correct' ? '#15803D' : '#991B1B',
-            border: `1px solid ${answerState === 'correct' ? '#BBF7D0' : '#FECACA'}`,
+            border: `1px solid ${answerState === 'correct' ? 'oklch(0.680 0.165 152 / 0.25)' : 'oklch(0.605 0.225 27 / 0.25)'}`,
           }}
         >
-          {answerState === 'correct' ? `Correct. ${question.explanation}` : `Not quite. ${question.explanation}`}
+          {answerState === 'correct' ? (
+            <Check size={16} style={{ flexShrink: 0, marginTop: 1 }} strokeWidth={2.5} />
+          ) : (
+            <Lightbulb size={16} style={{ flexShrink: 0, marginTop: 1 }} strokeWidth={2} />
+          )}
+          <span>
+            <strong>{answerState === 'correct' ? 'Correct. ' : 'Not quite. '}</strong>
+            {question.explanation}
+          </span>
         </div>
       )}
 

@@ -1,3 +1,5 @@
+import { StatusPill, type StatusPillTone } from '@/components/ui/StatusPill';
+
 type Difficulty = 'Easy' | 'Medium' | 'Hard';
 
 interface Exercise {
@@ -28,28 +30,44 @@ const exercises: Exercise[] = [
   },
 ];
 
-const difficultyColor: Record<Difficulty, string> = {
-  Easy: 'var(--uniflow-green)',
-  Medium: 'var(--uniflow-amber)',
-  Hard: 'var(--uniflow-red)',
-};
-
-const difficultyBg: Record<Difficulty, string> = {
-  Easy: 'rgba(34, 197, 94, 0.10)',
-  Medium: 'rgba(245, 158, 11, 0.10)',
-  Hard: 'rgba(239, 68, 68, 0.10)',
+const difficultyTone: Record<Difficulty, StatusPillTone> = {
+  Easy: 'success',
+  Medium: 'warn',
+  Hard: 'danger',
 };
 
 export default function ExercisesTab() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       {exercises.map((ex) => (
-        <div key={ex.number} style={{ background: 'var(--uniflow-card)', border: '1px solid var(--uniflow-border)', borderRadius: 12, padding: '20px 24px', boxShadow: 'var(--uniflow-shadow)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, color: 'var(--uniflow-text-3)', textTransform: 'uppercase' }}>{ex.number}</span>
-            <span style={{ fontSize: 11, fontWeight: 700, color: difficultyColor[ex.difficulty], background: difficultyBg[ex.difficulty], padding: '2px 8px', borderRadius: 4 }}>{ex.difficulty}</span>
+        <div
+          key={ex.number}
+          style={{
+            background: 'var(--uniflow-card)',
+            border: '1px solid var(--uniflow-border)',
+            borderRadius: 12,
+            padding: '20px 24px',
+            boxShadow: 'var(--uniflow-shadow)',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-mono), monospace',
+                fontSize: 11,
+                fontWeight: 700,
+                color: 'var(--uniflow-text-3)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+              }}
+            >
+              {ex.number}
+            </span>
+            <StatusPill tone={difficultyTone[ex.difficulty]} label={ex.difficulty} size="xs" uppercase />
           </div>
-          <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--uniflow-text-1)', marginBottom: 8 }}>{ex.title}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--uniflow-text-1)', marginBottom: 8 }}>
+            {ex.title}
+          </div>
           <div style={{ fontSize: 13, color: 'var(--uniflow-text-2)', lineHeight: 1.7 }}>{ex.body}</div>
         </div>
       ))}

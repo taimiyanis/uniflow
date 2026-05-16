@@ -1,3 +1,5 @@
+import { StatusPill } from '@/components/ui/StatusPill';
+
 interface Props {
   selectedChapterIndex: number;
 }
@@ -7,8 +9,8 @@ export default function NotesTab({ selectedChapterIndex }: Props) {
     return (
       <div style={{ background: 'var(--uniflow-card)', border: '1px solid var(--uniflow-border)', borderRadius: 14, padding: '28px 32px', boxShadow: 'var(--uniflow-shadow)' }}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, background: 'var(--uniflow-blue-light)', color: 'var(--uniflow-blue)', padding: '3px 10px', borderRadius: 6 }}>Chapter 4</span>
-          <span style={{ fontSize: 11, fontWeight: 700, background: '#FEF9C3', color: '#854D0E', padding: '3px 10px', borderRadius: 6 }}>Core concept</span>
+          <StatusPill tone="brand" label="Chapter 4" />
+          <StatusPill tone="warn" label="Core concept" />
         </div>
         <h1 style={{ fontSize: 20, fontWeight: 900, color: 'var(--uniflow-text-1)', marginBottom: 20 }}>The IS-LM Model</h1>
         <h2 style={{ fontSize: 14, fontWeight: 800, color: 'var(--uniflow-text-1)', marginBottom: 8 }}>What is IS-LM?</h2>
@@ -57,8 +59,8 @@ export default function NotesTab({ selectedChapterIndex }: Props) {
     return (
       <div style={{ background: 'var(--uniflow-card)', border: '1px solid var(--uniflow-border)', borderRadius: 14, padding: '28px 32px', boxShadow: 'var(--uniflow-shadow)' }}>
         <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, background: 'var(--uniflow-blue-light)', color: 'var(--uniflow-blue)', padding: '3px 10px', borderRadius: 6 }}>Chapter 3</span>
-          <span style={{ fontSize: 11, fontWeight: 700, background: '#FEF9C3', color: '#854D0E', padding: '3px 10px', borderRadius: 6 }}>Core concept</span>
+          <StatusPill tone="brand" label="Chapter 3" />
+          <StatusPill tone="warn" label="Core concept" />
         </div>
         <h1 style={{ fontSize: 20, fontWeight: 900, color: 'var(--uniflow-text-1)', marginBottom: 20 }}>GDP, GNP and National Accounts</h1>
         <h2 style={{ fontSize: 14, fontWeight: 800, color: 'var(--uniflow-text-1)', marginBottom: 8 }}>Key Definitions</h2>
