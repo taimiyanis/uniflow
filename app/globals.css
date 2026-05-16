@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-nunito);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
   --font-heading: var(--font-syne);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -82,7 +82,54 @@
   --sidebar-border: oklch(0.30 0.06 260);
   --sidebar-ring: oklch(0.52 0.18 260);
 
-  /* UNIFLOW custom tokens */
+  /* ===========================================
+     UNIFLOW design tokens — v2 (May 2026)
+     Backwards-compatible: all original --uniflow-*
+     vars below remain valid. New tokens layer on top.
+     =========================================== */
+
+  /* Brand scale — Radix-style 12 steps, OKLCH.
+     Step 9 = solid brand (#2F6FED). Step 12 = sidebar navy (#1B2B5E). */
+  --uniflow-1:  oklch(0.992 0.004 263);
+  --uniflow-2:  oklch(0.975 0.012 263);
+  --uniflow-3:  oklch(0.945 0.028 263);
+  --uniflow-4:  oklch(0.910 0.045 263);
+  --uniflow-5:  oklch(0.870 0.065 263);
+  --uniflow-6:  oklch(0.820 0.085 263);
+  --uniflow-7:  oklch(0.750 0.115 263);
+  --uniflow-8:  oklch(0.680 0.150 263);
+  --uniflow-9:  oklch(0.595 0.207 263);   /* = #2F6FED */
+  --uniflow-10: oklch(0.545 0.215 263);
+  --uniflow-11: oklch(0.470 0.190 263);
+  --uniflow-12: oklch(0.245 0.085 263);   /* = #1B2B5E */
+
+  /* Status tokens (semantic) */
+  --success:           oklch(0.680 0.165 152);
+  --success-bg:        oklch(0.965 0.040 152);
+  --success-foreground:oklch(0.985 0 0);
+  --warn:              oklch(0.665 0.155 75);
+  --warn-bg:           oklch(0.970 0.040 85);
+  --warn-foreground:   oklch(0.300 0.080 60);
+  --danger:            oklch(0.605 0.225 27);
+  --danger-bg:         oklch(0.965 0.040 27);
+  --danger-foreground: oklch(0.985 0 0);
+  --info:              oklch(0.660 0.135 230);
+  --info-bg:           oklch(0.965 0.030 230);
+  --info-foreground:   oklch(0.985 0 0);
+
+  /* Motion tokens */
+  --duration-instant: 80ms;
+  --duration-fast:    150ms;
+  --duration-base:    220ms;
+  --duration-slow:    360ms;
+  --duration-hero:    600ms;
+  --ease-out:         cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:      cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:      cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ===========================================
+     Original UNIFLOW tokens (kept for back-compat)
+     =========================================== */
   --uniflow-bg: #F7F9FF;
   --uniflow-card: #FFFFFF;
   --uniflow-sidebar: #1B2B5E;
@@ -95,11 +142,20 @@
   --uniflow-amber: #F59E0B;
   --uniflow-red: #EF4444;
   --uniflow-border: #E5E9F5;
-  --uniflow-text-1: #111827;
-  --uniflow-text-2: #4B5563;
+
+  /* Text colors — warmed slightly per research recommendation
+     (Notion #37352F pattern; ~6.5% perceived warmth lift). */
+  --uniflow-text-1: #1A1A24;   /* was #111827 — warmer near-black */
+  --uniflow-text-2: #4B5360;   /* was #4B5563 — minor warm shift */
   --uniflow-text-3: #9CA3AF;
-  --uniflow-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(47,111,237,0.06);
-  --uniflow-shadow-hover: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(47,111,237,0.1);
+
+  /* Shadow — tinted with sidebar navy at low alpha (was pure black). */
+  --uniflow-shadow:       0 1px 3px 0 oklch(0.245 0.085 263 / 0.06),
+                          0 1px 2px -1px oklch(0.245 0.085 263 / 0.04);
+  --uniflow-shadow-hover: 0 4px 12px -2px oklch(0.245 0.085 263 / 0.10),
+                          0 2px 4px -2px oklch(0.245 0.085 263 / 0.06);
+  --uniflow-shadow-lg:    0 12px 24px -6px oklch(0.245 0.085 263 / 0.12),
+                          0 4px 8px -4px oklch(0.245 0.085 263 / 0.07);
 }
 
 .dark {
@@ -152,7 +208,38 @@
   box-sizing: border-box;
 }
 
+/* Universal focus-visible ring for keyboard accessibility.
+   Honors prefers-reduced-motion via transition. */
+:where(a, button, [role="button"], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--uniflow-9);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Linear-style hover lift for interactive cards — background shift, not shadow */
+.uniflow-interactive-card {
+  transition: background var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+.uniflow-interactive-card:hover {
+  background: var(--uniflow-3) !important;
+  border-color: var(--uniflow-7) !important;
+}
+
+/* Task row hover */
+.uniflow-task-row:hover {
+  background: var(--uniflow-2);
+}
+
 @keyframes bounce {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

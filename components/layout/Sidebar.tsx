@@ -1,29 +1,61 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import {
+  LayoutDashboardIcon,
+  BookOpenIcon,
+  CalendarDaysIcon,
+  SparklesIcon,
+  PaletteIcon,
+  GaugeIcon,
+  CrownIcon,
+  type LucideIcon,
+} from 'lucide-react';
 
-type NavItem = { label: string; href: string; icon: string; pro?: boolean };
+type NavItem = {
+  label: string;
+  href: string;
+  Icon: LucideIcon;
+  shortcut?: string;
+  pro?: boolean;
+};
 
 const navItems: NavItem[] = [
-  { label: 'Dashboard', href: '/', icon: '▣' },
-  { label: 'My Courses', href: '/course/ec22', icon: '◈' },
-  { label: 'Planner', href: '/planner', icon: '◷' },
-  { label: 'AI Tutor', href: '#', icon: '◎' },
-  { label: 'Grades', href: '#', icon: '◆', pro: true },
-  { label: 'UNIFLOW+', href: '#', icon: '★', pro: true },
+  { label: 'Dashboard', href: '/', Icon: LayoutDashboardIcon, shortcut: '1' },
+  { label: 'My Courses', href: '/course/ec22', Icon: BookOpenIcon, shortcut: '2' },
+  { label: 'Planner', href: '/planner', Icon: CalendarDaysIcon, shortcut: '3' },
+  { label: 'AI Tutor', href: '#', Icon: SparklesIcon, shortcut: '4' },
+  { label: 'Design Research', href: '/design-research', Icon: PaletteIcon, shortcut: '5' },
+  { label: 'Grades', href: '#', Icon: GaugeIcon, pro: true },
+  { label: 'UNIFLOW+', href: '#', Icon: CrownIcon, pro: true },
 ];
 
 const DEMO_USER = { name: 'Yanis Taimi', initials: 'YT', subtitle: 'B2 · ESCP BIM' };
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  // Linear-style ⌘1..⌘5 keyboard shortcuts
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey)) return;
+      const item = navItems.find((n) => n.shortcut === e.key);
+      if (!item || item.href === '#') return;
+      e.preventDefault();
+      router.push(item.href);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [router]);
 
   return (
     <aside
       style={{
-        width: 220,
-        minWidth: 220,
+        width: 224,
+        minWidth: 224,
         background: 'var(--uniflow-sidebar)',
         display: 'flex',
         flexDirection: 'column',
@@ -99,30 +131,52 @@ export default function Sidebar() {
       <nav style={{ flex: 1, padding: '0 12px' }}>
         {navItems.map((item) => {
           const isActive = item.href !== '#' && pathname === item.href;
+          const isDisabled = item.href === '#';
           const commonStyle = {
             display: 'flex',
             alignItems: 'center',
             gap: 10,
-            padding: '9px 12px',
+            padding: '8px 10px',
             borderRadius: 8,
             marginBottom: 2,
             textDecoration: 'none',
             background: isActive ? 'rgba(47,111,237,0.18)' : 'transparent',
-            color: isActive ? '#fff' : 'rgba(255,255,255,0.55)',
+            color: isActive ? '#fff' : 'rgba(255,255,255,0.65)',
             fontSize: 13,
-            fontWeight: isActive ? 700 : 500,
+            fontWeight: isActive ? 600 : 500,
             transition: 'background 0.15s, color 0.15s',
-            cursor: 'pointer',
+            cursor: isDisabled ? 'default' : 'pointer',
           } as React.CSSProperties;
 
           const inner = (
             <>
-              <span style={{ fontSize: 15, opacity: isActive ? 1 : 0.7 }}>{item.icon}</span>
-              {item.label}
+              <item.Icon
+                size={16}
+                strokeWidth={isActive ? 2.25 : 2}
+                style={{ opacity: isActive ? 1 : 0.75, flexShrink: 0 }}
+              />
+              <span style={{ flex: 1 }}>{item.label}</span>
+              {item.shortcut && !item.pro && (
+                <span
+                  className="nav-shortcut"
+                  style={{
+                    fontFamily: 'ui-monospace, "JetBrains Mono", monospace',
+                    fontSize: 10,
+                    fontWeight: 600,
+                    color: 'rgba(255,255,255,0.45)',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    padding: '1px 5px',
+                    borderRadius: 4,
+                    letterSpacing: '0.3px',
+                  }}
+                >
+                  ⌘{item.shortcut}
+                </span>
+              )}
               {item.pro && (
                 <span
                   style={{
-                    marginLeft: 'auto',
                     fontSize: 9,
                     fontWeight: 800,
                     background: 'rgba(245,158,11,0.18)',
@@ -138,7 +192,7 @@ export default function Sidebar() {
             </>
           );
 
-          if (item.href === '#') {
+          if (isDisabled) {
             return (
               <button key={item.label} type="button" style={{ ...commonStyle, border: 'none', width: '100%', textAlign: 'left' }}>
                 {inner}
