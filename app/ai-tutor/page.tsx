@@ -115,7 +115,7 @@ export default function AITutorPage() {
       }}
     >
       {/* Header */}
-      <header style={{ marginBottom: hasMessages ? 16 : 32, flexShrink: 0 }}>
+      <header style={{ marginBottom: hasMessages ? 16 : 32, flexShrink: 0, transition: 'margin-bottom var(--duration-base) var(--ease-out)' }}>
         <div
           style={{
             display: 'flex',
@@ -136,7 +136,7 @@ export default function AITutorPage() {
               boxShadow: '0 4px 12px rgba(47,111,237,0.30)',
             }}
           >
-            <Sparkles size={18} color="#fff" strokeWidth={2.25} />
+            <Sparkles size={18} color="#fff" strokeWidth={2} />
           </div>
           <div style={{ flex: 1 }}>
             <h1
@@ -294,7 +294,7 @@ export default function AITutorPage() {
                     cursor: 'pointer',
                   }}
                 >
-                  <a.icon size={13} strokeWidth={2.25} />
+                  <a.icon size={13} strokeWidth={2} />
                   {a.label}
                 </button>
               ))}
@@ -306,6 +306,9 @@ export default function AITutorPage() {
       {/* Messages */}
       {hasMessages && (
         <div
+          role="log"
+          aria-live="polite"
+          aria-label="Chat messages"
           style={{
             flex: 1,
             overflowY: 'auto',
@@ -326,6 +329,8 @@ export default function AITutorPage() {
                 }}
               >
                 <div
+                  role="article"
+                  aria-label="Your message"
                   style={{
                     background: 'var(--uniflow-blue)',
                     color: '#fff',
@@ -356,7 +361,7 @@ export default function AITutorPage() {
                     marginTop: 2,
                   }}
                 >
-                  <Sparkles size={14} color="#fff" strokeWidth={2.25} />
+                  <Sparkles size={14} color="#fff" strokeWidth={2} />
                 </div>
                 <div>
                   <div
@@ -372,6 +377,8 @@ export default function AITutorPage() {
                     UNIFLOW AI
                   </div>
                   <div
+                    role="article"
+                    aria-label="AI Tutor response"
                     style={{
                       background: 'var(--uniflow-2)',
                       border: '1px solid var(--uniflow-border)',
@@ -406,7 +413,7 @@ export default function AITutorPage() {
                   marginTop: 2,
                 }}
               >
-                <Sparkles size={14} color="#fff" strokeWidth={2.25} />
+                <Sparkles size={14} color="#fff" strokeWidth={2} />
               </div>
               <div
                 style={{
@@ -426,7 +433,7 @@ export default function AITutorPage() {
                       width: 6,
                       height: 6,
                       borderRadius: '50%',
-                      background: 'var(--uniflow-text-3)',
+                      background: 'var(--uniflow-text-2)',
                       animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
                     }}
                   />
@@ -466,7 +473,6 @@ export default function AITutorPage() {
           style={{
             flex: 1,
             border: 'none',
-            outline: 'none',
             background: 'transparent',
             fontSize: 14,
             fontWeight: 500,
@@ -477,25 +483,46 @@ export default function AITutorPage() {
         />
         <button
           type="button"
+          aria-label={typing ? "Sending message" : "Send message"}
           onClick={() => sendMessage(input)}
-          disabled={!input.trim()}
+          disabled={!input.trim() || typing}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 6,
-            background: input.trim() ? 'var(--uniflow-blue)' : 'var(--uniflow-3)',
-            color: input.trim() ? '#fff' : 'var(--uniflow-text-3)',
+            background: (input.trim() && !typing) ? 'var(--uniflow-blue)' : 'var(--uniflow-3)',
+            color: (input.trim() && !typing) ? '#fff' : 'var(--uniflow-text-3)',
             border: 'none',
             borderRadius: 10,
             padding: '9px 14px',
             fontSize: 13,
             fontWeight: 700,
-            cursor: input.trim() ? 'pointer' : 'not-allowed',
+            cursor: (!input.trim() || typing) ? 'not-allowed' : 'pointer',
             transition: 'background var(--duration-fast) var(--ease-out)',
           }}
         >
-          Send
-          <Send size={13} strokeWidth={2.25} />
+          {typing ? (
+            <>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: 12,
+                  height: 12,
+                  borderRadius: '50%',
+                  border: '2px solid currentColor',
+                  borderTopColor: 'transparent',
+                  animation: 'spin 0.7s linear infinite',
+                  flexShrink: 0,
+                }}
+              />
+              <span>Sending</span>
+            </>
+          ) : (
+            <>
+              Send
+              <Send size={13} strokeWidth={2} />
+            </>
+          )}
         </button>
       </div>
 
@@ -520,7 +547,7 @@ export default function AITutorPage() {
                 cursor: 'pointer',
               }}
             >
-              <a.icon size={11} strokeWidth={2.25} />
+              <a.icon size={11} strokeWidth={2} />
               {a.label}
             </button>
           ))}

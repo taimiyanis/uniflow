@@ -199,20 +199,20 @@ export default function QuizTab() {
           let borderColor = 'var(--uniflow-border)';
           let bg = 'var(--uniflow-card)';
           let color = 'var(--uniflow-text-1)';
-          let letterBg = '#F3F4F6';
+          let letterBg = 'var(--uniflow-3)';
           let letterColor = 'var(--uniflow-text-2)';
 
           if (isAnswered) {
             if (isCorrectOpt) {
               borderColor = 'var(--success)';
               bg = 'var(--success-bg)';
-              color = '#15803D';
+              color = 'var(--success-text)';
               letterBg = 'var(--success)';
               letterColor = '#fff';
             } else if (isSelectedOpt) {
               borderColor = 'var(--danger)';
               bg = 'var(--danger-bg)';
-              color = '#991B1B';
+              color = 'var(--danger-text)';
               letterBg = 'var(--danger)';
               letterColor = '#fff';
             }
@@ -224,6 +224,7 @@ export default function QuizTab() {
               type="button"
               onClick={() => handleAnswer(i)}
               disabled={isAnswered}
+              aria-disabled={isAnswered}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -236,7 +237,7 @@ export default function QuizTab() {
                 fontSize: 13,
                 fontWeight: 600,
                 textAlign: 'left',
-                cursor: isAnswered ? 'default' : 'pointer',
+                cursor: isAnswered ? 'not-allowed' : 'pointer',
                 transition: 'border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)',
                 width: '100%',
               }}
@@ -278,7 +279,7 @@ export default function QuizTab() {
             lineHeight: 1.6,
             marginBottom: 16,
             background: answerState === 'correct' ? 'var(--success-bg)' : 'var(--danger-bg)',
-            color: answerState === 'correct' ? '#15803D' : '#991B1B',
+            color: answerState === 'correct' ? 'var(--success-text)' : 'var(--danger-text)',
             border: `1px solid ${answerState === 'correct' ? 'oklch(0.680 0.165 152 / 0.25)' : 'oklch(0.605 0.225 27 / 0.25)'}`,
           }}
         >

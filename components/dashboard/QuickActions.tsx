@@ -151,7 +151,7 @@ export default function QuickActions() {
               letterSpacing: '0.8px',
             }}
           >
-            <CalendarDays size={12} strokeWidth={2.25} />
+            <CalendarDays size={12} strokeWidth={2} />
             This week
           </div>
           <span

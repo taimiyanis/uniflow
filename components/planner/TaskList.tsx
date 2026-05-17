@@ -14,13 +14,23 @@ export default function TaskList() {
   const [newLabel, setNewLabel] = useState('');
   const [newCourse, setNewCourse] = useState<string>(ALL_COURSE_CODES[0] ?? 'EC22');
   const inputRef = useRef<HTMLInputElement>(null);
+  const [lastCompleted, setLastCompleted] = useState<string | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (adding) inputRef.current?.focus();
   }, [adding]);
 
   function toggle(id: string) {
+    const task = tasks.find((t) => t.id === id);
+    const willBeDone = task ? !task.done : false;
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+    // Only show toast when transitioning to done (not undone)
+    if (willBeDone && task) {
+      setLastCompleted(task.label ?? '');
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+      toastTimerRef.current = setTimeout(() => setLastCompleted(null), 2500);
+    }
   }
 
   function startAdding() {
@@ -49,6 +59,7 @@ export default function TaskList() {
   return (
     <div
       style={{
+        position: 'relative',
         background: 'var(--uniflow-card)',
         border: '1px solid var(--uniflow-border)',
         borderRadius: 14,
@@ -124,7 +135,7 @@ export default function TaskList() {
                 transition: 'all var(--duration-fast) var(--ease-out)',
               }}
             >
-              {task.done && <Check size={13} strokeWidth={3} />}
+              {task.done && <Check size={13} strokeWidth={2.5} />}
             </div>
             <span
               style={{
@@ -196,9 +207,8 @@ export default function TaskList() {
               placeholder="New task — press Enter to save, Esc to close"
               style={{
                 flex: 1,
-                background: 'transparent',
-                border: 'none',
-                outline: 'none',
+                background: 'var(--uniflow-card)',
+                border: '1px solid var(--uniflow-blue-border)',
                 fontSize: 13,
                 fontWeight: 500,
                 color: 'var(--uniflow-text-1)',
@@ -241,7 +251,7 @@ export default function TaskList() {
                 alignItems: 'center',
               }}
             >
-              <X size={14} strokeWidth={2.25} />
+              <X size={14} strokeWidth={2} />
             </button>
           </div>
         )}
@@ -271,6 +281,29 @@ export default function TaskList() {
         <Plus size={14} strokeWidth={2.5} />
         {adding ? 'Save task' : 'Add task'}
       </button>
+
+      {lastCompleted && (
+        <div
+          aria-live="polite"
+          style={{
+            position: 'absolute',
+            bottom: 12,
+            right: 12,
+            background: 'var(--uniflow-12)',
+            color: '#fff',
+            borderRadius: 8,
+            padding: '8px 14px',
+            fontSize: 12,
+            fontWeight: 600,
+            boxShadow: 'var(--uniflow-shadow-hover)',
+            animation: 'tab-enter var(--duration-base) var(--ease-out)',
+            zIndex: 10,
+            pointerEvents: 'none',
+          }}
+        >
+          ✓ {lastCompleted} — done
+        </div>
+      )}
     </div>
   );
 }

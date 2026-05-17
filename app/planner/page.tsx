@@ -5,7 +5,7 @@ export default function PlannerPage() {
   return (
     <div>
       <div style={{ fontSize: 22, fontWeight: 900, color: 'var(--uniflow-text-1)', marginBottom: 24 }}>Planner</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+      <div className="grid grid-cols-2 gap-5">
         <TaskList />
         <UpcomingEvents />
       </div>

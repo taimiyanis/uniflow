@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <div>
       <WelcomeBanner />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="grid grid-cols-2 gap-4">
         <ExamCountdown />
         <ProgressRing />
       </div>

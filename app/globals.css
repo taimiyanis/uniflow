@@ -156,6 +156,21 @@
                           0 2px 4px -2px oklch(0.245 0.085 263 / 0.06);
   --uniflow-shadow-lg:    0 12px 24px -6px oklch(0.245 0.085 263 / 0.12),
                           0 4px 8px -4px oklch(0.245 0.085 263 / 0.07);
+
+  /* Spacing scale — 4pt grid. Use instead of hardcoded px values. */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  28px;
+  --space-8:  32px;
+  --space-10: 40px;
+
+  /* Semantic text colors for status states */
+  --success-text: oklch(0.420 0.150 152);
+  --danger-text:  oklch(0.390 0.180 27);
 }
 
 .dark {
@@ -234,6 +249,15 @@
 @keyframes bounce {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-6px); }
+}
+
+@keyframes tab-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

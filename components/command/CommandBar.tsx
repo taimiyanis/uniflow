@@ -168,7 +168,7 @@ export default function CommandBar() {
                   }}
                 >
                   <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <SparklesIcon size={14} strokeWidth={2.25} />
+                    <SparklesIcon size={14} strokeWidth={2} />
                     Ask AI: <em>{search || '…'}</em>
                   </span>
                   <KbdHint>↵</KbdHint>

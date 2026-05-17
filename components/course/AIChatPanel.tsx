@@ -105,7 +105,7 @@ export default function AIChatPanel() {
           ) : (
             <div key={i} style={{ alignSelf: 'flex-start', maxWidth: '90%' }}>
               <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--uniflow-text-3)', marginBottom: 4 }}>UNIFLOW AI</div>
-              <div style={{ background: '#F3F4F6', borderRadius: '4px 12px 12px 12px', padding: '8px 12px', fontSize: 12, color: 'var(--uniflow-text-1)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+              <div style={{ background: 'var(--uniflow-2)', borderRadius: '4px 12px 12px 12px', padding: '8px 12px', fontSize: 12, color: 'var(--uniflow-text-1)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
                 {msg.text}
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function AIChatPanel() {
         )}
 
         {typing && (
-          <div style={{ display: 'flex', gap: 4, padding: '8px 12px', background: '#F3F4F6', borderRadius: '4px 12px 12px 12px', width: 'fit-content' }}>
+          <div style={{ display: 'flex', gap: 4, padding: '8px 12px', background: 'var(--uniflow-2)', borderRadius: '4px 12px 12px 12px', width: 'fit-content' }}>
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
@@ -121,7 +121,7 @@ export default function AIChatPanel() {
                   width: 6,
                   height: 6,
                   borderRadius: '50%',
-                  background: 'var(--uniflow-text-3)',
+                  background: 'var(--uniflow-text-2)',
                   animation: `bounce 1.2s ease-in-out ${i * 0.2}s infinite`,
                 }}
               />
@@ -145,12 +145,12 @@ export default function AIChatPanel() {
             padding: '8px 12px',
             fontSize: 12,
             fontFamily: 'inherit',
-            outline: 'none',
             background: 'var(--uniflow-bg)',
           }}
         />
         <button
           type="button"
+          aria-label="Send message"
           onClick={() => sendMessage(input)}
           style={{
             background: 'var(--uniflow-blue)',

@@ -26,7 +26,7 @@ const tonePalette: Record<
 > = {
   success: {
     dot: 'var(--success)',
-    text: '#15803D',
+    text: 'var(--success-text)',
     bg: 'var(--success-bg)',
     border: 'oklch(0.680 0.165 152 / 0.25)',
   },
@@ -49,9 +49,9 @@ const tonePalette: Record<
     border: 'oklch(0.660 0.135 230 / 0.25)',
   },
   neutral: {
-    dot: '#9CA3AF',
+    dot: 'var(--uniflow-text-3)',
     text: '#4B5360',
-    bg: '#F3F4F6',
+    bg: 'var(--uniflow-2)',
     border: '#E5E7EB',
   },
   brand: {
