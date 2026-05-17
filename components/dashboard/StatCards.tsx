@@ -39,48 +39,72 @@ export default function StatCards() {
   return (
     <div
       style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 14,
-        marginBottom: 24,
+        background: 'var(--uniflow-card)',
+        border: '1px solid var(--uniflow-border)',
+        borderRadius: 14,
+        padding: '16px 16px',
+        boxShadow: 'var(--uniflow-shadow)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
       }}
     >
-      {cards.map((card) => (
-        <div
-          key={card.label}
-          style={{
-            background: 'var(--uniflow-card)',
-            border: `1px solid var(--uniflow-border)`,
-            borderLeft: `3px solid ${card.accent}`,
-            borderRadius: 12,
-            padding: '16px 18px',
-            boxShadow: 'var(--uniflow-shadow)',
-          }}
-        >
-          {card.icon}
+      <div
+        style={{
+          fontSize: 10,
+          fontWeight: 600,
+          fontFamily: 'var(--font-body)',
+          color: 'var(--uniflow-text-3)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.9px',
+          marginBottom: 8,
+        }}
+      >
+        Stats
+      </div>
+
+      {cards.map((card, i) => (
+        <div key={card.label}>
+          {i > 0 && (
+            <div
+              style={{
+                height: 1,
+                background: 'var(--uniflow-border)',
+                margin: '8px 0',
+              }}
+            />
+          )}
           <div
             style={{
-              fontSize: 28,
-              fontWeight: 900,
-              color: 'var(--uniflow-text-1)',
-              fontFamily: 'var(--font-syne)',
-              lineHeight: 1,
-              marginTop: 8,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: '2px 0',
             }}
           >
-            {card.value}
-          </div>
-          <div
-            style={{
-              fontSize: 11,
-              fontWeight: 600,
-              color: 'var(--uniflow-text-3)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.8px',
-              marginTop: 4,
-            }}
-          >
-            {card.label}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {card.icon}
+              <span
+                style={{
+                  fontSize: 12,
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--uniflow-text-2)',
+                  fontWeight: 500,
+                }}
+              >
+                {card.label}
+              </span>
+            </div>
+            <span
+              style={{
+                fontSize: 15,
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 700,
+                color: 'var(--uniflow-text-1)',
+              }}
+            >
+              {card.value}
+            </span>
           </div>
         </div>
       ))}

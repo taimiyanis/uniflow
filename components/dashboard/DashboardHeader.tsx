@@ -1,5 +1,12 @@
 import { HERO_EXAM, daysUntil } from '@/lib/data/courses';
 
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 18) return 'Good afternoon';
+  return 'Good evening';
+}
+
 export default function DashboardHeader() {
   const days = HERO_EXAM.examDate ? daysUntil(HERO_EXAM.examDate) : null;
 
@@ -31,48 +38,42 @@ export default function DashboardHeader() {
       : 'var(--uniflow-blue-border)';
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 24,
-      }}
-    >
-      <div>
-        <h1
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontSize: 24,
-            fontWeight: 800,
-            color: 'var(--uniflow-text-1)',
-            margin: 0,
-            lineHeight: 1.2,
-          }}
-        >
-          Welcome back, Yanis
-        </h1>
-        <p
-          style={{
-            fontSize: 13,
-            color: 'var(--uniflow-text-3)',
-            margin: '4px 0 0',
-          }}
-        >
-          B2 · ESCP BIM · Fall 2025/2026
-        </p>
-      </div>
+    <div>
+      <h1
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 28,
+          fontWeight: 700,
+          color: 'var(--uniflow-text-1)',
+          margin: 0,
+          lineHeight: 1.15,
+          letterSpacing: '-0.3px',
+        }}
+      >
+        {getGreeting()}, Yanis.
+      </h1>
+      <p
+        style={{
+          fontSize: 13,
+          fontFamily: 'var(--font-body)',
+          color: 'var(--uniflow-text-3)',
+          margin: '5px 0 0',
+        }}
+      >
+        B2 · ESCP BIM · Fall 2025/2026
+      </p>
 
       {days !== null && (
         <span
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            padding: '6px 14px',
+            marginTop: 16,
+            padding: '5px 12px',
             borderRadius: 999,
             fontSize: 12,
-            fontWeight: 700,
+            fontWeight: 600,
+            fontFamily: 'var(--font-body)',
             color: pillColor,
             background: pillBg,
             border: `1px solid ${pillBorder}`,
