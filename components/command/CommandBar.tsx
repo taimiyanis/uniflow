@@ -8,7 +8,6 @@ import {
   BookOpenIcon,
   CalendarDaysIcon,
   SparklesIcon,
-  PaletteIcon,
   CornerDownLeftIcon,
   SearchIcon,
 } from 'lucide-react';
@@ -28,8 +27,7 @@ const routes: Route[] = [
   { key: 'dashboard', label: 'Dashboard', href: '/', Icon: LayoutDashboardIcon, shortcut: '1' },
   { key: 'courses', label: 'Macroeconomics (EC22)', href: '/course/ec22', Icon: BookOpenIcon, shortcut: '2' },
   { key: 'planner', label: 'Planner', href: '/planner', Icon: CalendarDaysIcon, shortcut: '3' },
-  { key: 'ai-tutor', label: 'AI Tutor', href: '/course/ec22', Icon: SparklesIcon, shortcut: '4' },
-  { key: 'design-research', label: 'Design Research', href: '/design-research', Icon: PaletteIcon, shortcut: '5' },
+  { key: 'ai-tutor', label: 'AI Tutor', href: '/ai-tutor', Icon: SparklesIcon, shortcut: '4' },
 ];
 
 export default function CommandBar() {
@@ -63,7 +61,7 @@ export default function CommandBar() {
 
   function askAI() {
     setOpen(false);
-    router.push('/course/ec22');
+    router.push('/ai-tutor');
   }
 
   return (

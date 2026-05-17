@@ -8,8 +8,6 @@ import {
   BookOpenIcon,
   CalendarDaysIcon,
   SparklesIcon,
-  PaletteIcon,
-  GaugeIcon,
   CrownIcon,
   type LucideIcon,
 } from 'lucide-react';
@@ -26,9 +24,7 @@ const navItems: NavItem[] = [
   { label: 'Dashboard', href: '/', Icon: LayoutDashboardIcon, shortcut: '1' },
   { label: 'My Courses', href: '/course/ec22', Icon: BookOpenIcon, shortcut: '2' },
   { label: 'Planner', href: '/planner', Icon: CalendarDaysIcon, shortcut: '3' },
-  { label: 'AI Tutor', href: '#', Icon: SparklesIcon, shortcut: '4' },
-  { label: 'Design Research', href: '/design-research', Icon: PaletteIcon, shortcut: '5' },
-  { label: 'Grades', href: '#', Icon: GaugeIcon, pro: true },
+  { label: 'AI Tutor', href: '/ai-tutor', Icon: SparklesIcon, shortcut: '4' },
   { label: 'UNIFLOW+', href: '#', Icon: CrownIcon, pro: true },
 ];
 
