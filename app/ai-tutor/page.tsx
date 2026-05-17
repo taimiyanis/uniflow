@@ -237,7 +237,7 @@ export default function AITutorPage() {
                   key={s.label}
                   type="button"
                   onClick={() => sendMessage(s.label)}
-                  className="uniflow-task-row"
+                  className="uniflow-interactive-card"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -245,17 +245,22 @@ export default function AITutorPage() {
                     padding: '12px 14px',
                     border: '1px solid var(--uniflow-border)',
                     borderRadius: 10,
-                    background: 'var(--uniflow-card)',
+                    background: 'var(--uniflow-2)',
                     cursor: 'pointer',
-                    textAlign: 'left',
-                    fontSize: 13,
-                    fontWeight: 500,
-                    color: 'var(--uniflow-text-1)',
-                    transition: 'background var(--duration-fast) var(--ease-out)',
                   }}
                 >
-                  <s.icon size={15} color="var(--uniflow-blue)" strokeWidth={2} />
-                  {s.label}
+                  <s.icon size={14} color="var(--uniflow-text-3)" strokeWidth={2} />
+                  <span
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 500,
+                      color: 'var(--uniflow-text-1)',
+                      textAlign: 'left',
+                      flex: 1,
+                    }}
+                  >
+                    {s.label}
+                  </span>
                 </button>
               ))}
             </div>
@@ -283,13 +288,13 @@ export default function AITutorPage() {
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: 7,
-                    padding: '8px 14px',
+                    gap: 6,
+                    padding: '8px 16px',
                     background: 'var(--uniflow-blue-light)',
                     border: '1px solid var(--uniflow-blue-border)',
                     borderRadius: 999,
                     fontSize: 12,
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: 'var(--uniflow-blue-dark)',
                     cursor: 'pointer',
                   }}
@@ -326,6 +331,9 @@ export default function AITutorPage() {
                 style={{
                   alignSelf: 'flex-end',
                   maxWidth: '80%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
                 }}
               >
                 <div
@@ -344,6 +352,16 @@ export default function AITutorPage() {
                 >
                   {msg.text}
                 </div>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 500,
+                    color: 'var(--uniflow-text-3)',
+                    marginTop: 3,
+                  }}
+                >
+                  {new Date(msg.ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                </span>
               </div>
             ) : (
               <div key={i} style={{ alignSelf: 'flex-start', maxWidth: '85%', display: 'flex', gap: 10 }}>
@@ -392,6 +410,17 @@ export default function AITutorPage() {
                   >
                     {msg.text}
                   </div>
+                  <span
+                    style={{
+                      display: 'block',
+                      fontSize: 10,
+                      fontWeight: 500,
+                      color: 'var(--uniflow-text-3)',
+                      marginTop: 3,
+                    }}
+                  >
+                    {new Date(msg.ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                  </span>
                 </div>
               </div>
             )

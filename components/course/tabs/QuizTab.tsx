@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Lightbulb, Check, X as XIcon } from 'lucide-react';
 import { ec22Quiz } from '@/lib/data/quiz';
+import { recentQuizAttempts } from '@/lib/data/stats';
 import { NumericDisplay } from '@/components/ui/NumericDisplay';
 import { StatusPill } from '@/components/ui/StatusPill';
 
@@ -91,6 +92,27 @@ export default function QuizTab() {
             : score >= 6
               ? 'Good effort. Review the questions you missed.'
               : 'Keep practising. Go through the Notes tab and try again.'}
+        </div>
+        {/* Quiz history */}
+        <div style={{ marginTop: 20, borderTop: '1px solid var(--uniflow-border)', paddingTop: 16 }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--uniflow-text-3)', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: 10 }}>
+            Recent Attempts
+          </div>
+          {recentQuizAttempts.map((attempt, i) => (
+            <div key={i} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '6px 0',
+              borderBottom: i < recentQuizAttempts.length - 1 ? '1px solid var(--uniflow-border)' : 'none',
+            }}>
+              <span style={{ fontSize: 12, color: 'var(--uniflow-text-2)', flex: 1, fontWeight: 500 }}>{attempt.chapter}</span>
+              <span style={{ fontFamily: 'var(--font-mono), monospace', fontSize: 12, fontWeight: 700, color: 'var(--uniflow-text-1)' }}>
+                {attempt.score}/{attempt.total}
+              </span>
+              <span style={{ fontSize: 10, color: 'var(--uniflow-text-3)' }}>{attempt.date}</span>
+            </div>
+          ))}
         </div>
         <button
           type="button"
